@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "server.iptables",
+      "type": "java.lang.String",
+      "description": "Description for server.iptables."
+  }
+] }

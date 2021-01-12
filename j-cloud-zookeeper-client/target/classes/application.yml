@@ -1,0 +1,12 @@
+
+server:
+  port: 8005
+
+
+#�������----ע��zookeeper��ע����������
+spring:
+  application:
+    name: cloud-client
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181  #contos��zookeeper����ĵ�ַ�Ͷ˿ں�

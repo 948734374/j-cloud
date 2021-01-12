@@ -1,0 +1,30 @@
+# 应用端口
+server:
+  port: 8991
+# 服务名称
+spring:
+  application:
+    name: spring-cloud-gateway
+  # 开启 Gateway 服务注册中心服务发现
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: j-cloud-provider1 # 路由的id,没有规定规则但要求唯一,建议配合服务名
+          #匹配后提供服务的路由地址
+          uri: http://localhost:7901
+          predicates:
+           - Path=/user/**/** # 断言，路径相匹配的进行路由*/
+# Eureka Server 配置
+eureka:
+  instance:
+    appname: spring-cloud-gateway
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+# 配置Gateway日志等级，输出转发细节信息
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
