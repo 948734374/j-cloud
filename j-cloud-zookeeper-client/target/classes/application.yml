@@ -3,10 +3,10 @@ server:
   port: 8005
 
 
-#ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½----×¢ï¿½ï¿½zookeeperï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#·þÎñ±ðÃû----×¢²ázookeeperµ½×¢²áÖÐÐÄÃû³Æ
 spring:
   application:
     name: cloud-client
   cloud:
     zookeeper:
-      connect-string: localhost:2181  #contosï¿½ï¿½zookeeperï¿½ï¿½ï¿½ï¿½Äµï¿½Ö·ï¿½Í¶Ë¿Úºï¿½
+      connect-string: localhost:2181  #contosÉÏzookeeper·þÎñµÄµØÖ·ºÍ¶Ë¿ÚºÅ

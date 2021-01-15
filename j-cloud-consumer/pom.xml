@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.cloud</groupId>
+        <artifactId>j-cloud</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+<!--    <groupId>j-cloud</groupId>-->
+    <artifactId>j-cloud-consumer</artifactId>
+    <packaging>jar</packaging>
+<!--    <version>0.0.1-SNAPSHOT</version>-->
+<!--    <name>j-cloud-consumer</name>-->
+<!--    <description>Demo project for Spring Boot</description>-->
+
+    <dependencies>
+       <!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+           &lt;!&ndash; <version>2.2.4.RELEASE</version>&ndash;&gt;
+        </dependency>
+       &lt;!&ndash; <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter</artifactId>
+           &lt;!&ndash; <version>2.2.4.RELEASE</version>&ndash;&gt;
+        </dependency>&ndash;&gt;
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+           &lt;!&ndash; <version>2.2.4.RELEASE</version>&ndash;&gt;
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+           &lt;!&ndash; <version>2.2.1.RELEASE</version>&ndash;&gt;
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+          &lt;!&ndash;  <version>2.2.1.RELEASE</version>&ndash;&gt;
+        </dependency>-->
+       <!-- <dependency>
+            <groupId>j-cloud</groupId>
+            <artifactId>j-cloud-feign</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>-->
+    </dependencies>
+
+
+</project>
