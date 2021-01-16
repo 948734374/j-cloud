@@ -6,9 +6,8 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.4.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>j-cloud-zookeeper-provider</groupId>
+    <groupId>groupid-zookeeper-provider</groupId>
     <artifactId>j-cloud-zookeeper-provider</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>j-cloud-zookeeper</name>
@@ -40,7 +39,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
-            <version>2.2.3.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.zookeeper</groupId>
@@ -53,7 +51,6 @@
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
             <!-- 与服务器安装的Zookeeper版本相同 -->
-            <version>3.4.14</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
