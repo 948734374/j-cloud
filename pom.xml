@@ -81,6 +81,8 @@
                 <version>${project.version}</version>
                 <type>jar</type>
             </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
@@ -92,6 +94,9 @@
         <module>j-cloud-zookeeper-client</module>
         <module>j-cloud-feign</module>
         <module>j-cloud-gateway</module>
+        <module>j-cloud-common</module>
+        <module>j-cloud-rabbit-service</module>
+        <module>j-cloud-rabbit-consumer</module>
     </modules>
 
 

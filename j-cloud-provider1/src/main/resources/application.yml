@@ -4,7 +4,20 @@ server:
 spring:
   application:
     # 应用名称
-    name: provider-user
+      name: provider-user
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 500
+        min-idle: 0
+    lettuce:
+      shutdown-timeout: 0
+
 
 # eureka 配置
 eureka:
