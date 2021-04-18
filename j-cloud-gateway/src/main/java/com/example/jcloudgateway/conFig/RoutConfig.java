@@ -16,11 +16,14 @@ public class RoutConfig {
         RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
         for (String s:us.url) {
             routes.route( s //路由ID
-                    , r->r.path("/**/**/**").uri("lb://"+s))  //第一个路径是断言，第二个是URI
+                    , r->r.path("/"+s+"/**/**").uri("lb://"+s))  //第一个路径是断言，第二个是URI
                     .build();
         }
 //        routes.route("j-cloud-provider1"  //路由ID
-//                , r->r.path("/provider-user/**/**").uri("lb://provider-user"))  //第一个路径是断言，第二个是URI
+//                , r->r.path("/provider/**/**").uri("lb://j-cloud-provider1"))  //第一个路径是断言，第二个是URI
+//                .build();
+//        routes.route("j-cloud-consumer"  //路由ID
+//                , r->r.path("/consumer/**/**").uri("lb://j-cloud-consumer"))  //第一个路径是断言，第二个是URI
 //                .build();
          routes.build();
         return routes.build();

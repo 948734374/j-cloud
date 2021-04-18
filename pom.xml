@@ -22,6 +22,7 @@
             <druid.version>1.1.16</druid.version>
             <druid.spring.boot.starter.version>1.1.10</druid.spring.boot.starter.version>
             <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
+            <spring.boot.start.mail.version>2.1.6.RELEASE</spring.boot.start.mail.version>
             <spring.cloud.version>Hoxton.SR1</spring.cloud.version>
             <spring.cloud.alibaba.version>2.1.0.RELEASE</spring.cloud.alibaba.version>
             <mybatis.spring.boot.version>1.3.0</mybatis.spring.boot.version>
@@ -82,6 +83,16 @@
                 <type>jar</type>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-actuator-autoconfigure</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-mail</artifactId>
+                <version>${spring.boot.start.mail.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -97,6 +108,7 @@
         <module>j-cloud-common</module>
         <module>j-cloud-rabbit-service</module>
         <module>j-cloud-rabbit-consumer</module>
+        <module>j-cloud-mail</module>
     </modules>
 
 

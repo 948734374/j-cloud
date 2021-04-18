@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: j-cloud-mail
+  mail:
+    default-encoding: UTF-8
+    host: smtp.163.com
+    password: zhang1111
+    username: 13176855771@163.com
+    port: 25
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
