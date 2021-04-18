@@ -13,7 +13,12 @@ import org.springframework.context.annotation.ComponentScan;
 public class JCloudConsumerApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(JCloudConsumerApplication.class, args);
+
+//        SpringApplication application = new SpringApplication(JCloudConsumerApplication.class);
+//        application.setBannerMode(Banner.Mode.OFF);
+//        application.run(args);
     }
 
 }
