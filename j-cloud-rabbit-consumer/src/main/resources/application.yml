@@ -3,24 +3,24 @@ server:
 
 spring:
   application:
-    name: Rabbit-consumer
+    name: j-cloud-rabbit-consumer
   cloud:
     stream:
-      binders: # ÔÚ´Ë´¦ÅäÖÃÒª°ó¶¨µÄrabbitMQµÄ·şÎñĞÅÏ¢
-        defaultRabbit: # ±íÊ¾¶¨ÒåµÄÃû³Æ£¬ÓÃÓÚbindingµÄÕûºÏ
-          type: rabbit # ÏûÏ¢ÖĞ¼ä¼şÀàĞÍ
-          environment: # ÉèÖÃrabbitMQµÄÏà¹Ø»·¾³ÅäÖÃ
+      binders: # åœ¨æ­¤å¤„é…ç½®è¦ç»‘å®šçš„rabbitMQçš„æœåŠ¡ä¿¡æ¯
+        defaultRabbit: # è¡¨ç¤ºå®šä¹‰çš„åç§°ï¼Œç”¨äºbindingçš„æ•´åˆ
+          type: rabbit # æ¶ˆæ¯ä¸­é—´ä»¶ç±»å‹
+          environment: # è®¾ç½®rabbitMQçš„ç›¸å…³ç¯å¢ƒé…ç½®
             spring:
               rabbitmq:
                 host: localhost
                 port: 5672
                 username: guest
                 password: guest
-      bindings: # ·şÎñµÄÕûºÏ´¦Àí
-        input: # Õâ¸öÃû×ÖÊÇÒ»¸öÍ¨µÀµÄÃû³Æ
-          destination: studyExchange # ±íÊ¾ÒªÊ¹ÓÃµÄexchangeÃû³Æ¶¨Òå
-          content-type: application/json # ÉèÖÃÏûÏ¢ÀàĞÍ£¬±¾´ÎÎªjson£¬ÎÄ±¾ÔòÉèÎªtext/plain
-          binder: defaultRabbit # ÉèÖÃÒª°ó¶¨µÄÏûÏ¢·şÎñµÄ¾ßÌåÉèÖÃ
+      bindings: # æœåŠ¡çš„æ•´åˆå¤„ç†
+        input: # è¿™ä¸ªåå­—æ˜¯ä¸€ä¸ªé€šé“çš„åç§°
+          destination: studyExchange # è¡¨ç¤ºè¦ä½¿ç”¨çš„exchangeåç§°å®šä¹‰
+          content-type: application/json # è®¾ç½®æ¶ˆæ¯ç±»å‹ï¼Œæœ¬æ¬¡ä¸ºjsonï¼Œæ–‡æœ¬åˆ™è®¾ä¸ºtext/plain
+          binder: defaultRabbit # è®¾ç½®è¦ç»‘å®šçš„æ¶ˆæ¯æœåŠ¡çš„å…·ä½“è®¾ç½®
           group: spectrumrpcA
 
 eureka:
@@ -28,8 +28,8 @@ eureka:
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka
 #  instance:
-#    lease-renewal-interval-in-seconds: 2 # ÉèÖÃĞÄÌøµÄ¼ä¸ôÊ±¼ä£¬Ä¬ÈÏ30
-#    lease-expiration-duration-in-seconds: 5 # ³¬¹ı5Ãë¼ä¸ô£¬Ä¬ÈÏ90
-#    instance-id: receive-8803.com #Ö÷»úÃû
-#    prefer-ip-address: true # ÏÔÊ¾ip
+#    lease-renewal-interval-in-seconds: 2 # è®¾ç½®å¿ƒè·³çš„é—´éš”æ—¶é—´ï¼Œé»˜è®¤30
+#    lease-expiration-duration-in-seconds: 5 # è¶…è¿‡5ç§’é—´éš”ï¼Œé»˜è®¤90
+#    instance-id: receive-8803.com #ä¸»æœºå
+#    prefer-ip-address: true # æ˜¾ç¤ºip
 

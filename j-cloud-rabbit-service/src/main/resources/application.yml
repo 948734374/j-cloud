@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: Rabbit-service
+    name: j-cloud-rabbit-service
   cloud:
     stream:
       binders: # 在此处配置要绑定的rabbitMQ的服务信息

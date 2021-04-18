@@ -4,7 +4,7 @@ server:
 spring:
   application:
     # 应用名称
-    name: Consumer
+    name: j-cloud-consumer
 
 # eureka 配置
 eureka:

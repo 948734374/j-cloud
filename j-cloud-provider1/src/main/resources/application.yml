@@ -4,7 +4,7 @@ server:
 spring:
   application:
     # 应用名称
-      name: provider-user
+      name: j-cloud-provider1
   redis:
     host: 127.0.0.1
     port: 6379

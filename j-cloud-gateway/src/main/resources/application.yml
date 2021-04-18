@@ -4,7 +4,7 @@ server:
 # 服务名称
 spring:
   application:
-    name: spring-cloud-gateway
+    name: j-cloud-gateway
   # 开启 Gateway 服务注册中心服务发现
   cloud:
     gateway:
@@ -21,7 +21,7 @@ spring:
 # Eureka Server 配置
 eureka:
   instance:
-    appname: spring-cloud-gateway
+    appname: j-cloud-server-eureka
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
@@ -30,8 +30,13 @@ logging:
   level:
     org.springframework.cloud.gateway: debug
 
-gateway.urls.url[0]: a
-gateway.urls.url[1]: aa
-gateway.urls.url[2]: aaa
-gateway.urls.url[3]: aaaa
-gateway.urls.url[4]: aaaaa
+gateway.urls.url[0]: j-cloud-provider1
+gateway.urls.url[1]: j-cloud-consumer
+#gateway.urls.url[2]: j-cloud-consumer
+#gateway.urls.url[3]: j-cloud-zookeeper
+#gateway.urls.url[4]: j-cloud-zookeeper-client
+#gateway.urls.url[5]: j-cloud-feign
+#gateway.urls.url[6]: j-cloud-gateway
+#gateway.urls.url[7]: j-cloud-common
+#gateway.urls.url[8]: j-cloud-rabbit-service
+#gateway.urls.url[9]: j-cloud-rabbit-consumer
