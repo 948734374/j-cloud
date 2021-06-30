@@ -31,6 +31,18 @@
             <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     </properties>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+    </dependencies>
     <!--子模块继承后,提供作用:锁定版本+子module不用groupId和version-->
     <dependencyManagement>
         <dependencies>
@@ -90,9 +102,17 @@
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-mail</artifactId>
-                <version>${spring.boot.start.mail.version}</version>
+                <artifactId>spring-boot-test</artifactId>
+                <version>2.3.5.RELEASE</version>
+                <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
@@ -109,6 +129,7 @@
         <module>j-cloud-rabbit-service</module>
         <module>j-cloud-rabbit-consumer</module>
         <module>j-cloud-mail</module>
+        <module>j-cloud-redies</module>
     </modules>
 
 

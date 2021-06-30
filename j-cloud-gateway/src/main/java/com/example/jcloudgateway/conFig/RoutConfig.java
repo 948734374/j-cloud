@@ -18,7 +18,6 @@ public class RoutConfig {
             routes.route( s.getServiceName()//路由ID
                     , r->r.path("/"+s.getPathUrl()+"/**/**").uri("lb://"+s.getServiceName()))  //第一个路径是断言，第二个是URI
                     .build();
-
         }
         return routes.build();
     }
