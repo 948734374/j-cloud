@@ -22,8 +22,6 @@ public class GateWayConfig implements GlobalFilter , Ordered {
         String path = exchange.getRequest().getURI().getPath();
         String host = exchange.getRequest().getURI().getHost();
 
-        String[] url = urls.getUrl();
-
 //        if(path!=null&& Arrays.asList(url).contains(path)){
 //            白名单时使用
 //            return chain.filter(exchange);

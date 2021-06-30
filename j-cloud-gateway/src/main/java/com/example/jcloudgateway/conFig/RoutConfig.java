@@ -14,18 +14,12 @@ public class RoutConfig {
     public RouteLocator customRouteLocator(RouteLocatorBuilder routeLocatorBuilder){  //RouteLocator是路由定位器
 
         RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
-        for (String s:us.url) {
-            routes.route( s //路由ID
-                    , r->r.path("/"+s+"/**/**").uri("lb://"+s))  //第一个路径是断言，第二个是URI
+        for (urls.urlInfo s:us.getUrlinfos()) {
+            routes.route( s.getServiceName()//路由ID
+                    , r->r.path("/"+s.getPathUrl()+"/**/**").uri("lb://"+s.getServiceName()))  //第一个路径是断言，第二个是URI
                     .build();
+
         }
-//        routes.route("j-cloud-provider1"  //路由ID
-//                , r->r.path("/provider/**/**").uri("lb://j-cloud-provider1"))  //第一个路径是断言，第二个是URI
-//                .build();
-//        routes.route("j-cloud-consumer"  //路由ID
-//                , r->r.path("/consumer/**/**").uri("lb://j-cloud-consumer"))  //第一个路径是断言，第二个是URI
-//                .build();
-         routes.build();
         return routes.build();
     }
 }
