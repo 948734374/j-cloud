@@ -19,7 +19,6 @@ spring:
 #          predicates:
 #           - Path=/provider-user/**/** # 断言，路径相匹配的进行路由*/
 
-
 # Eureka Server 配置
 eureka:
   instance:
