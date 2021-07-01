@@ -41,6 +41,11 @@
             <artifactId>spring-cloud-stream</artifactId>
             <version>3.0.1.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>com.cloud</groupId>
+            <artifactId>j-cloud-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

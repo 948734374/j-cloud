@@ -3,7 +3,6 @@ package com.example.jcloudconsumer.controller;
 
 import jcloud.jcloudfeign.feignclient.DemoFeign;
 import jcloud.jcloudfeign.feignclient.Provide1Client;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +14,7 @@ public class UserController {
     @Resource
     private Provide1Client provide1Client;
 
-    @Autowired
+    @Resource
     private DemoFeign demoFeign;
 
     @RequestMapping("/sayHello")
