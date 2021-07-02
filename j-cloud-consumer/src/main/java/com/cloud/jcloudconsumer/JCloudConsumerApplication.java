@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableFeignClients
 @EnableDiscoveryClient
-@ComponentScan({"com.cloud"})
+@ComponentScan({"com.cloud.jcloudconsumer","com.cloud.jcloudcommon"})
 public class JCloudConsumerApplication {
 
     public static void main(String[] args) {
