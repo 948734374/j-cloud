@@ -6,5 +6,5 @@ public interface MqPushService {
      * 消息发送
      * @return
      */
-    String send();
+    void send();
 }

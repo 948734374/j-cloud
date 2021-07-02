@@ -22,11 +22,11 @@ public class MqPushServiceImpl implements MqPushService {
     private RabbitTemplate rabbitTemplate;
 
     @Override
-    public String send() {
+    public void send() {
         String serial = UUID.randomUUID().toString();
-//        output.send(MessageBuilder.withPayload(serial).build());
+
         System.out.println("serial = " + serial);
         rabbitTemplate.convertAndSend("TestDirectQueue",serial,"500000");
-        return serial;
+
     }
 }
