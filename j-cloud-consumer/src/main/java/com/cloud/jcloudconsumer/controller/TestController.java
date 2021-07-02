@@ -1,4 +1,4 @@
-package com.example.jcloudconsumer.controller;
+package com.cloud.jcloudconsumer.controller;
 
 
 import com.cloud.jcloudcommon.utils.RedisUtil;
@@ -18,4 +18,5 @@ public class TestController {
     public String sayhello(){
         return redisUtil.get("111").toString();
     }
+
 }

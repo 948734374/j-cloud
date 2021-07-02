@@ -1,4 +1,4 @@
-package jcloud.jcloudfeign;
+package com.cloud.jcloudfeign;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

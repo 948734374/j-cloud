@@ -1,6 +1,6 @@
-package jcloud.jcloudfeign.common;
+package com.cloud.jcloudfeign.common;
 
-import jcloud.jcloudfeign.feignclient.Provide1Client;
+import com.cloud.jcloudfeign.feignclient.Provide1Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

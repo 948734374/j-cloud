@@ -1,4 +1,4 @@
-package jcloud.jcloudfeign.feignclient;
+package com.cloud.jcloudfeign.feignclient;
 
 import org.springframework.stereotype.Component;
 

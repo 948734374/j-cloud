@@ -1,6 +1,6 @@
-package jcloud.jcloudfeign.feignclient;
+package com.cloud.jcloudfeign.feignclient;
 
-import jcloud.jcloudfeign.common.Provide1ClientFallBack;
+import com.cloud.jcloudfeign.common.Provide1ClientFallBack;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;

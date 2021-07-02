@@ -1,8 +1,8 @@
-package com.example.jcloudconsumer.controller;
+package com.cloud.jcloudconsumer.controller;
 
 
-import jcloud.jcloudfeign.feignclient.DemoFeign;
-import jcloud.jcloudfeign.feignclient.Provide1Client;
+import com.cloud.jcloudfeign.feignclient.DemoFeign;
+import com.cloud.jcloudfeign.feignclient.Provide1Client;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
