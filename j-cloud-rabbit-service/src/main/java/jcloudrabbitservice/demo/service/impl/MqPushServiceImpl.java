@@ -7,6 +7,10 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.MessageChannel;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @EnableBinding(Source.class)
@@ -26,7 +30,16 @@ public class MqPushServiceImpl implements MqPushService {
         String serial = UUID.randomUUID().toString();
 
         System.out.println("serial = " + serial);
-        rabbitTemplate.convertAndSend("TestDirectQueue",serial,"500000");
+        rabbitTemplate.convertAndSend("TestDirectExchange",serial,"500000");
 
+        String messageId = String.valueOf(UUID.randomUUID());
+        String messageData = "test message, hello!";
+        String createTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        Map<String,Object> map=new HashMap<>();
+        map.put("messageId",messageId);
+        map.put("messageData",messageData);
+        map.put("createTime",createTime);
+
+        rabbitTemplate.convertAndSend("TestDirectExchange", "TestDirectRouting", map);
     }
 }
