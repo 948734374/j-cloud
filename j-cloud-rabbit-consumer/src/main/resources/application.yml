@@ -2,25 +2,29 @@ server:
   port: 8803
 
 spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
   application:
     name: j-cloud-rabbit-consumer
-    cloud:
-      stream:
-        binders:
-          rabbit1:
-            type: rabbit
-            environment:
-              spring:
-                rabbitmq:
-                  addresses: localhost
-                  port: 5672
-                  username: admin
-                  password: admin
+  cloud:
+    stream:
+      binders:
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                addresses: localhost
+                port: 5672
+                username: admin
+                password: admin
         bindings:
-          testInPut:
-            destination: TestDirectExchange
-            content-type: application/json
-            binder: rabbit1
+          destination: testRabbit
+          content-type: application/json
+          binder: rabbit1
 eureka:
   client:
     service-url:

@@ -12,22 +12,22 @@ import java.util.Map;
 public class ReceiveMessageListener {
 
     @RabbitHandler
-    public String input1(String message){
+    public void input1(String message){
         System.out.println("消费者1，----->接收到的消息："+ message.toString());
-        return message;
+
     }
 
 
     @RabbitHandler
-    public Map input2(Map message){
+    public void input2(Map message){
         System.out.println("消费者2，----->接收到的消息："+ message.toString());
-        return message;
+
     }
 
 
     @RabbitHandler
-    public byte[] input3(byte[] message){
+    public void input3(byte[] message){
         System.out.println("消费者3，----->接收到的消息："+ message.toString());
-        return message;
+
     }
 }

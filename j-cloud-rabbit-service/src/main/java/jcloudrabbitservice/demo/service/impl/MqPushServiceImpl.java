@@ -3,8 +3,10 @@ package jcloudrabbitservice.demo.service.impl;
 import jcloudrabbitservice.demo.service.MqPushService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,12 +14,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@EnableBinding(Source.class)
+@Service
 public class MqPushServiceImpl implements MqPushService {
-
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+    @Autowired
+    Source source;
 
     @Override
     public void send() {
@@ -31,5 +34,10 @@ public class MqPushServiceImpl implements MqPushService {
         map.put("createTime",createTime);
 
         rabbitTemplate.convertAndSend("TestDirectExchange", "TestDirectRouting", map);
+    }
+    @Override
+    public void send1(){
+        Message<String> message = MessageBuilder.withPayload("1111").build();
+        source.output().send(message);
     }
 }

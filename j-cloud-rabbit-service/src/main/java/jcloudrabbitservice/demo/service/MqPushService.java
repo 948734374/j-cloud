@@ -7,4 +7,10 @@ public interface MqPushService {
      * @return
      */
     void send();
+
+    /**
+     * 消息发送
+     * @return
+     */
+    void send1();
 }
