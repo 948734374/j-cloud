@@ -1,17 +1,18 @@
 package jcloudrabbitservice.demo;
 
 import jcloudrabbitservice.demo.service.MqPushService;
+import jcloudrabbitservice.demo.service.impl.MqPushServiceImpl1;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.messaging.Source;
 
-@EnableBinding(Source.class)
+//@EnableBinding(Source.class)
 @SpringBootTest
 class JCloudRabbitServiceApplicationTests {
     @Autowired
     MqPushService mqPushService;
+    @Autowired
+    MqPushServiceImpl1 mqPushServiceImpl1;
 
     @Test
     void contextLoads() {
@@ -20,6 +21,6 @@ class JCloudRabbitServiceApplicationTests {
 
     @Test
     void contextLoads1() {
-        mqPushService.send1();
+        mqPushServiceImpl1.send1();
     }
 }

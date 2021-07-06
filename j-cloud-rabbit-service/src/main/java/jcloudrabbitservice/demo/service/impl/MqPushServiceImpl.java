@@ -35,9 +35,5 @@ public class MqPushServiceImpl implements MqPushService {
 
         rabbitTemplate.convertAndSend("TestDirectExchange", "TestDirectRouting", map);
     }
-    @Override
-    public void send1(){
-        Message<String> message = MessageBuilder.withPayload("1111").build();
-        source.output().send(message);
-    }
+
 }
