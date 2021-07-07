@@ -1,11 +1,10 @@
 package jcloudrabbitservice.demo.service.impl;
 
 import jcloudrabbitservice.demo.service.MqPushService;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.messaging.Source;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,6 +20,8 @@ public class MqPushServiceImpl implements MqPushService {
     private RabbitTemplate rabbitTemplate;
     @Autowired
     Source source;
+    @Autowired
+    RabbitAdmin rabbitAdmin;
 
     @Override
     public void send() {
