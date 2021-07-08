@@ -37,4 +37,17 @@ public class MqPushServiceImpl implements MqPushService {
         rabbitTemplate.convertAndSend("TestDirectExchange", "TestDirectRouting", map);
     }
 
+    @Override
+    public void send1() {
+        String messageId = String.valueOf(UUID.randomUUID());
+        String messageData = "test message, hello!";
+        String createTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        Map<String,Object> map=new HashMap<>();
+        map.put("messageId",messageId);
+        map.put("messageData",messageData);
+        map.put("createTime",createTime);
+
+        Object o = rabbitTemplate.convertSendAndReceive("TestDirectExchange", "TestDirectRouting", map);
+    }
+
 }

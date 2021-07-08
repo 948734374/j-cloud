@@ -1,0 +1,11 @@
+###会员服务的端口号
+server:
+  port: 8002
+###服务别名----服务注册到注册中心名称
+spring:
+  application:
+    name: cloud-consumer-order
+  cloud:
+    zookeeper:
+      #注册到zk的地址
+      connect-string: localhost:2181

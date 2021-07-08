@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "urls.urlinfo[1]",
+      "type": "java.lang.String",
+      "description": "Description for urls.urlinfo[1]."
+    },
+    {
+      "name": "urls.urlinfo[0]",
+      "type": "java.lang.String",
+      "description": "Description for urls.urlinfo[0]."
+    }
+  ] }

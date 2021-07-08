@@ -1,0 +1,12 @@
+
+server:
+  port: 8005
+
+
+#服务别名----注册zookeeper到注册中心名称
+spring:
+  application:
+    name: cloud-client
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181  #contos上zookeeper服务的地址和端口号

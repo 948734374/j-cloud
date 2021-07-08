@@ -16,11 +16,24 @@ class JCloudRabbitServiceApplicationTests {
 
     @Test
     void contextLoads() {
-        mqPushService.send();
+
+        for (int i = 0; i < 5; i++) {
+            mqPushService.send();
+        }
+
     }
 
     @Test
     void contextLoads1() {
         mqPushServiceImpl1.send1();
+    }
+
+    @Test
+    void contextLoads2() {
+
+        for (int i = 0; i < 5; i++) {
+            mqPushService.send1();
+        }
+
     }
 }

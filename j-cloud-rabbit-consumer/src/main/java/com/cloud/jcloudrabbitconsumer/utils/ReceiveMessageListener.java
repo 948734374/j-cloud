@@ -11,7 +11,7 @@ import java.util.Map;
 
 
 @Component
-@RabbitListener(queues = "TestDirectQueue")
+@RabbitListener/*(queues = "TestDirectQueue")*/
 public class ReceiveMessageListener {
 
     @RabbitHandler

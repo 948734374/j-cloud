@@ -8,5 +8,9 @@ public interface MqPushService {
      */
     void send();
 
-
+    /**
+     * 消息发送
+     * @return
+     */
+    void send1();
 }

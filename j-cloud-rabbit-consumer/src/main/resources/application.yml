@@ -9,22 +9,22 @@ spring:
     password: admin
   application:
     name: j-cloud-rabbit-consumer
-  cloud:
-    stream:
-      binders:
-        rabbit1:
-          type: rabbit
-          environment:
-            spring:
-              rabbitmq:
-                addresses: localhost
-                port: 5672
-                username: admin
-                password: admin
-        bindings:
-          destination: testRabbit
-          content-type: application/json
-          binder: rabbit1
+#  cloud:
+#    stream:
+#      binders:
+#        rabbit1:
+#          type: rabbit
+#          environment:
+#            spring:
+#              rabbitmq:
+#                addresses: localhost
+#                port: 5672
+#                username: admin
+#                password: admin
+#        bindings:
+#          destination: testRabbit
+#          content-type: application/json
+#          binder: rabbit1
 eureka:
   client:
     service-url:
