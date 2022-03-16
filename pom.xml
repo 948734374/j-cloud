@@ -129,6 +129,8 @@
         <module>j-cloud-rabbit-service</module>
         <module>j-cloud-rabbit-consumer</module>
         <module>j-cloud-mail</module>
+        <module>j-cloud-test</module>
+        <module>j-cloud-security</module>
     </modules>
 
 
