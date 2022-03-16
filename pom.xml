@@ -13,39 +13,32 @@
 
     <properties>
             <project.build.encoding>UTF-8</project.build.encoding>
-            <maven.compiler.source>1.8</maven.compiler.source>
-            <maven.compiler.target>1.8</maven.compiler.target>
-            <junit.version>4.12</junit.version>
+            <maven.compiler.source>17</maven.compiler.source>
+            <maven.compiler.target>17</maven.compiler.target>
+            <junit.version>4.13.2</junit.version>
             <log4j.version>1.2.17</log4j.version>
-            <lombok.version>1.16.18</lombok.version>
-            <mysql.version>8.0.18</mysql.version>
-            <druid.version>1.1.16</druid.version>
-            <druid.spring.boot.starter.version>1.1.10</druid.spring.boot.starter.version>
-            <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
-            <spring.boot.start.mail.version>2.1.6.RELEASE</spring.boot.start.mail.version>
-            <spring.cloud.version>Hoxton.SR1</spring.cloud.version>
-            <spring.cloud.alibaba.version>2.1.0.RELEASE</spring.cloud.alibaba.version>
-            <mybatis.spring.boot.version>1.3.0</mybatis.spring.boot.version>
-            <mybatis-spring-boot-starter.version>2.1.1</mybatis-spring-boot-starter.version>
-            <hutool-all.version>5.1.0</hutool-all.version>
-            <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+            <lombok.version>1.18.28</lombok.version>
+            <mysql.version>8.0.33</mysql.version>
+            <druid.version>1.2.18</druid.version>
+            <druid.spring.boot.starter.version>1.2.18</druid.spring.boot.starter.version>
+            <spring.boot.version>2.7.18</spring.boot.version>
+            <spring.boot.start.mail.version>2.7.18</spring.boot.start.mail.version>
+            <spring.cloud.version>2021.0.8</spring.cloud.version>
+            <spring.cloud.alibaba.version>2021.0.5.0</spring.cloud.alibaba.version>
+            <mybatis.spring.boot.version>2.3.1</mybatis.spring.boot.version>
+            <mybatis-spring-boot-starter.version>2.3.1</mybatis-spring-boot-starter.version>
+            <hutool-all.version>5.8.22</hutool-all.version>
+            <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     </properties>
 
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-test</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
 
-    </dependencies>
+
+
     <!--子模块继承后,提供作用:锁定版本+子module不用groupId和version-->
     <dependencyManagement>
         <dependencies>
+
             <!--springboot 2.2.2-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -129,6 +122,8 @@
         <module>j-cloud-rabbit-service</module>
         <module>j-cloud-rabbit-consumer</module>
         <module>j-cloud-mail</module>
+        <module>j-cloud-test</module>
+        <module>j-cloud-security</module>
     </modules>
 
 
