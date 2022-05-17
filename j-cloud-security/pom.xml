@@ -6,9 +6,8 @@
         <groupId>com.cloud</groupId>
         <artifactId>j-cloud</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+
     </parent>
-    <groupId>com.cloud</groupId>
     <artifactId>j-cloud-security</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>j-cloud-security</name>
