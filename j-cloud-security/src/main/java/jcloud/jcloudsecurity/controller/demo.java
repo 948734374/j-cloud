@@ -13,9 +13,13 @@ public class demo {
         return "恭喜你登录成功";
     }
 
-    @RequestMapping("/showLogin")
-    public String login() {
-//        return "/templates/login.html";
-        return "login.html";
+    @RequestMapping("/toMain")
+    public String main() {
+        return "redirect:main.html";
+    }
+
+    @RequestMapping("/toError")
+    public String error() {
+        return "redirect:error.html";
     }
 }

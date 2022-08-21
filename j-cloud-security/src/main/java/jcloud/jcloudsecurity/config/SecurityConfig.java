@@ -29,21 +29,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("user")
                 .passwordParameter("pass")
                 //自定义登录页面
-                .loginPage("/showLogin")
+                .loginPage("/login.html")
                 //必须和表单提交的接口一样，执行自定义登录逻辑
                 .loginProcessingUrl("/login")
+                //必须是post请求
+//              .successForwardUrl("/toMain")
+//              .failureForwardUrl("/toError");
                 //自定义登录成功处理器
-                .successHandler(new MyAuthenticationSuccessHandler("/templates/main.html"))
+                //与successForwardUrl不共存，下同
+                .successHandler(new MyAuthenticationSuccessHandler("/main.html"))
+//                .successHandler(new MyAuthenticationSuccessHandler("http://www.baidu.com"))
                 //自定义登录失败处理器
-                .failureHandler(new MyAuthenticationFailureHandler("/static/error.html"));
+                .failureHandler(new MyAuthenticationFailureHandler("/error.html"));
         //授权
         http.authorizeRequests()
                 //放行/login.html,不需要认证
-                .antMatchers("/showLogin").permitAll()
+                .antMatchers("/login.html").permitAll()
                 //放行/error.html，不需要认证
-                .antMatchers("/static/error.html").permitAll()
+                .antMatchers("/error.html").permitAll()
                 //基于权限判断
-                .antMatchers("/templates/main.html").hasAuthority("permission1")
+                .antMatchers("/main1.html").hasAuthority("admin")
+                .antMatchers("/main1.html").hasAnyAuthority("admin","admin1")
                 //所有请求必须认证
                 .anyRequest().authenticated();
         //异常处理器

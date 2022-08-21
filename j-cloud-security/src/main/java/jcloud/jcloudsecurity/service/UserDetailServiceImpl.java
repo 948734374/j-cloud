@@ -27,6 +27,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
         //返回UserDetails，实际开发中可拓展UserDetails
         return new User(username, password,
                 //自定义权限
-                AuthorityUtils.commaSeparatedStringToAuthorityList("permission1"));
+                AuthorityUtils.commaSeparatedStringToAuthorityList("admin,normal"));
     }
 }
