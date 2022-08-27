@@ -3,8 +3,6 @@ package jcloudtest.test.utils;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.alibaba.ttl.threadpool.TtlExecutors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -15,48 +13,26 @@ import java.util.concurrent.*;
 public class HttpClientUtil {
 
 
-    @Autowired
-    ThreadPoolTaskExecutor threadPoolTaskExecutor;
+    private static ConcurrentHashMap<String, List<String>> resultMaps;
 
-    public static List<String> list;
-
-    public List<String> batchPost(String url, List<HashMap<String, Object>> params) throws InterruptedException, ExecutionException {
-        list = Arrays.asList(new String[10]);
-        CountDownLatch countDownLatch = new CountDownLatch(params.size());
-        for (int i = 0; i < params.size(); i++) {
-
-            Map<String, Object> param = params.get(i);
-            param.put("index", i);
-            threadPoolTaskExecutor.submit(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        String result = HttpClientPoolUtil.post(url, param);
-                        list.set((Integer) param.get("index"), result);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        throw new RuntimeException(e);
-                    } finally {
-                        countDownLatch.countDown();
-                    }
-                }
-            });
-        }
-        countDownLatch.await();
-
-        return list;
+    static {
+        resultMaps = new ConcurrentHashMap<>();
     }
 
 
-    public List<String> batchPost1(String url, List<HashMap<String, Object>> params) throws InterruptedException, ExecutionException, IOException {
+    public List<String> batchPost(String url, List<HashMap<String, Object>> params) throws InterruptedException, ExecutionException, IOException {
         ExecutorService executorService = new ThreadPoolExecutor(1, 20, 20, TimeUnit.SECONDS, new LinkedBlockingDeque<>(1000));
-        list = Arrays.asList(new String[params.size()]);
+
 
         ExecutorService service = TtlExecutors.getTtlExecutorService(executorService);
 
-        InheritableThreadLocal<Integer> threadLocal = new TransmittableThreadLocal<>();
-        threadLocal.set(0);
+        InheritableThreadLocal<Integer> index = new TransmittableThreadLocal<>();
+        InheritableThreadLocal<String> parentThreadName = new TransmittableThreadLocal<>();
+        index.set(0);
+        String threadName = Thread.currentThread().getName();
+        parentThreadName.set(threadName);
+
+        resultMaps.put(threadName, Collections.synchronizedList(Arrays.asList(new String[params.size()])));
 
         CountDownLatch countDownLatch = new CountDownLatch(params.size());
         for (int i = 0; i < params.size(); i++) {
@@ -64,44 +40,47 @@ public class HttpClientUtil {
             Map<String, Object> param = params.get(i);
 
 
-
-            Future<HashMap<String, String>> future = service.submit(new Callable<HashMap<String, String>>() {
+            service.submit(new Runnable() {
                 @Override
-                public HashMap<String, String> call() throws Exception {
+                public void run() {
 
-                    HashMap<String, String> resultMap = new HashMap<>();
                     String result;
                     try {
-                        result = HttpClientPoolUtil.post(url, param);
+                        result = HttpClientPoolUtil.post(url, param, parentThreadName.get());
 
-                        synchronized (list){
-                            list.set(threadLocal.get(),result);
-                        }
+//                        synchronized (resultMaps) {
+                        resultMaps.get(parentThreadName.get()).set(index.get(), result);
+//                        }
                     } catch (Exception e) {
+                        System.out.println("请求出现异常");
                         e.printStackTrace();
                         throw new RuntimeException(e);
                     } finally {
                         countDownLatch.countDown();
                     }
 
-                    threadLocal.remove();
-                    return resultMap;
+                    index.remove();
+                    parentThreadName.remove();
+
                 }
             });
 
+            index.set(index.get() + 1);
 
-            System.out.println("子线程结束" + i);
-//            System.out.println("子线程结束" + i + future.get().toString());
-            threadLocal.set(threadLocal.get() + 1);
-//
-//            System.out.println("下标：" + future.get().get("1"));
-//            System.out.println("值：" + future.get().get("2"));
-//            list.set(Integer.parseInt(future.get().get("1")), future.get().get("2"));
         }
         countDownLatch.await();
-        executorService.shutdown();
-        HttpClientPoolUtil.close();
-        return list;
+//        executorService.shutdown();
+        service.shutdown();
+        HttpClientPoolUtil.close(parentThreadName.get());
+
+        List<String> httpResult;
+//        synchronized (resultMaps) {
+        httpResult = resultMaps.get(parentThreadName.get());
+        resultMaps.remove(parentThreadName.get());
+//        }
+        parentThreadName.remove();
+        index.remove();
+        return httpResult;
     }
 
 }

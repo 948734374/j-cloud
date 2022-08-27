@@ -5,7 +5,6 @@ import org.apache.http.*;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.protocol.HttpClientContext;
@@ -26,11 +25,14 @@ import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * HttpClient工具类
@@ -41,16 +43,24 @@ import java.util.concurrent.Executors;
  */
 public class HttpClientPoolUtil {
 
-    private static final int timeOut = 1000 * 1000;
+    private static final int timeOut = 10000000;
 
-    private static CloseableHttpClient httpClient = null;
-    private static PoolingHttpClientConnectionManager cm = null;
+    private static ConcurrentHashMap<String, CloseableHttpClient> httpClients;
+    private static ConcurrentHashMap<String, PoolingHttpClientConnectionManager> clientConnectionManagers;
+    private static ScheduledExecutorService service;
+
+    static {
+        httpClients = new ConcurrentHashMap<>();
+        clientConnectionManagers = new ConcurrentHashMap<>();
+        closeExpiredConnectionsPeriodTask();
+    }
+
 
     private final static Object syncLock = new Object();
 
     private static void config(HttpRequestBase httpRequestBase) {
         // 设置Header等
-        httpRequestBase.setHeader("User-Agent", "Mozilla/5.0");
+//        httpRequestBase.setHeader("User-Agent", "Mozilla/5.0");
         httpRequestBase
                 .setHeader("Accept",
                         "*/*");
@@ -75,7 +85,7 @@ public class HttpClientPoolUtil {
      * @author SHANHY
      * @create 2015年12月18日
      */
-    public static CloseableHttpClient getHttpClient(String url) {
+    public static Map<String, CloseableHttpClient> getHttpClient(String url, String threadName) {
         String hostname = url.split("/")[2];
         int port = 80;
         if (hostname.contains(":")) {
@@ -83,12 +93,15 @@ public class HttpClientPoolUtil {
             hostname = arr[0];
             port = Integer.parseInt(arr[1]);
         }
-            synchronized (syncLock) {
-                if (httpClient == null) {
-                    httpClient = createHttpClient(200, 40, 100, hostname, port);
-                }
+        synchronized (syncLock) {
+            if (httpClients.get(threadName) == null) {
+                CloseableHttpClient httpClient = createHttpClient(200, 40, 100, hostname, port, threadName);
+                httpClients.put(threadName, httpClient);
+            }
         }
-        return httpClient;
+
+
+        return httpClients;
     }
 
     /**
@@ -99,9 +112,9 @@ public class HttpClientPoolUtil {
      * @create 2015年12月18日
      */
     public static CloseableHttpClient createHttpClient(int maxTotal,
-                                                       int maxPerRoute, int maxRoute, String hostname, int port) {
+                                                       int maxPerRoute, int maxRoute, String hostname, int port, String threadName) {
 
-         cm = new PoolingHttpClientConnectionManager();
+        PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
         // 将最大连接数增加
         cm.setMaxTotal(maxTotal);
         // 将每个路由基础的连接增加
@@ -114,8 +127,8 @@ public class HttpClientPoolUtil {
         HttpRequestRetryHandler httpRequestRetryHandler = new HttpRequestRetryHandler() {
             public boolean retryRequest(IOException exception,
                                         int executionCount, HttpContext context) {
-                if (executionCount >= 5) {// 如果已经重试了5次，就放弃
-                    return false;
+                if (executionCount < 5) {// 如果已经重试了5次，就放弃
+                    return true;
                 }
                 if (exception instanceof NoHttpResponseException) {// 如果服务器丢掉了连接，那么就重试
                     return true;
@@ -151,24 +164,17 @@ public class HttpClientPoolUtil {
                 .setConnectionManager(cm)
                 .setRetryHandler(httpRequestRetryHandler).build();
 
+//        synchronized (httpClients) {
+            clientConnectionManagers.put(threadName, cm);
+//        }
+
         return httpClient;
     }
 
     private static void setPostParams(HttpPost httpost,
                                       Map<String, Object> params) {
-//        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-//        Set<String> keySet = params.keySet();
-//        for (String key : keySet) {
-//            nvps.add(new BasicNameValuePair(key, params.get(key).toString()));
-//        }
-//        try {
-//            httpost.setEntity(new UrlEncodedFormEntity(nvps, "UTF-8"));
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
 
-
-        JSONObject jsonObject  = new JSONObject();
+        JSONObject jsonObject = new JSONObject();
         // 通过map集成entrySet方法获取entity
         Set<Map.Entry<String, Object>> entrySet = params.entrySet();
         // 循环遍历，获取迭代器
@@ -197,21 +203,23 @@ public class HttpClientPoolUtil {
      * @author SHANHY
      * @create 2015年12月18日
      */
-    public static String post(String url, Map<String, Object> params) throws IOException {
+    public static String post(String url, Map<String, Object> params, String threadName) throws IOException {
         HttpPost httppost = new HttpPost(url);
         config(httppost);
         setPostParams(httppost, params);
         CloseableHttpResponse response = null;
+        HttpEntity entity;
+        String result;
         try {
-            response = getHttpClient(url).execute(httppost,
+            response = getHttpClient(url, threadName).get(threadName).execute(httppost,
                     HttpClientContext.create());
-            HttpEntity entity = response.getEntity();
-            String result = EntityUtils.toString(entity, "utf-8");
+            entity = response.getEntity();
+            result = EntityUtils.toString(entity, "utf-8");
             EntityUtils.consume(entity);
-            return result;
+
         } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
+
+            result = "";
         } finally {
             try {
                 if (response != null)
@@ -220,125 +228,46 @@ public class HttpClientPoolUtil {
                 e.printStackTrace();
             }
         }
+        return result;
     }
 
-    public static void close() throws IOException {
-        httpClient.close();
-        cm.close();
-        httpClient = null;
-        cm = null;
-    }
-
-    /**
-     * GET请求URL获取内容
-     *
-     * @param url
-     * @return
-     * @author SHANHY
-     * @create 2015年12月18日
-     */
-    public static String get(String url) {
-        HttpGet httpget = new HttpGet(url);
-
-
-        config(httpget);
-        CloseableHttpResponse response = null;
+    public static void close(String threadName) {
         try {
-            response = getHttpClient(url).execute(httpget,
-                    HttpClientContext.create());
-            HttpEntity entity = response.getEntity();
-            String result = EntityUtils.toString(entity, "utf-8");
-            EntityUtils.consume(entity);   //关闭HttpEntity是的流，如果手动关闭了InputStream instream = entity.getContent();这个流，也可以不调用这个方法
-            return result;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (response != null)
-                    response.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            httpClients.get(threadName).close();
+            clientConnectionManagers.get(threadName).close();
+            httpClients.remove(threadName);
+            clientConnectionManagers.remove(threadName);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        return null;
+
+
+    }
+
+    private static void closeExpiredConnectionsPeriodTask() {
+
+        service = Executors.newSingleThreadScheduledExecutor();
+
+        service.scheduleWithFixedDelay(new Runnable() {
+            @Override
+            public void run() {
+
+                for (Map.Entry<String, PoolingHttpClientConnectionManager> entry : clientConnectionManagers.entrySet()) {
+
+                    try {
+                        System.out.println(entry.getKey() + "开始清理过期连接" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                        entry.getValue().closeExpiredConnections();
+                        entry.getValue().closeIdleConnections(30, TimeUnit.SECONDS);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        }, 5, 60, TimeUnit.SECONDS);
+
     }
 
 
-    public static void main(String[] args) {
-        // URL列表数组
-        String[] urisToGet = {
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497",
-                "http://blog.csdn.net/catoop/article/details/38849497"};
-
-        long start = System.currentTimeMillis();
-        try {
-            int pagecount = urisToGet.length;
-            ExecutorService executors = Executors.newFixedThreadPool(pagecount);
-            CountDownLatch countDownLatch = new CountDownLatch(pagecount);
-            for (int i = 0; i < pagecount; i++) {
-                HttpGet httpget = new HttpGet(urisToGet[i]);
-                config(httpget);
-                // 启动线程抓取
-                executors
-                        .execute(new GetRunnable(urisToGet[i], countDownLatch));
-            }
-            countDownLatch.await();
-            executors.shutdown();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            System.out.println("线程" + Thread.currentThread().getName() + ","
-                    + System.currentTimeMillis() + ", 所有线程已完成，开始进入下一步！");
-        }
-
-        long end = System.currentTimeMillis();
-        System.out.println("consume -> " + (end - start));
-    }
-
-    static class GetRunnable implements Runnable {
-        private CountDownLatch countDownLatch;
-        private String url;
-
-        public GetRunnable(String url, CountDownLatch countDownLatch) {
-            this.url = url;
-            this.countDownLatch = countDownLatch;
-        }
-
-        @Override
-        public void run() {
-            try {
-                System.out.println(HttpClientPoolUtil.get(url));
-            } finally {
-                countDownLatch.countDown();
-            }
-        }
-    }
 }
 
