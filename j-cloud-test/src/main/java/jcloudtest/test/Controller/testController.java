@@ -1,7 +1,9 @@
 package jcloudtest.test.Controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import jcloudtest.test.Service.testService;
+import jcloudtest.test.entity.HttpResult;
 import jcloudtest.test.entity.SysUser;
 import jcloudtest.test.entity.TestSleep;
 import jcloudtest.test.utils.HttpClientUtil;
@@ -98,7 +100,7 @@ public class testController {
         List<HashMap<String, Object>> list = new ArrayList<>();
 
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             HashMap<String, Object> tem = new HashMap<>();
 
             tem.put("index", "index"+i);
@@ -113,6 +115,41 @@ public class testController {
         }
 
         System.out.println("testBatch1结果："+strings.toString());
+
+    }
+
+
+    @GetMapping("/testBatch2")
+    @ResponseBody
+    public void testBatch2() {
+
+        List<String> list = new ArrayList<>();
+        List<String> list2 = new ArrayList<>();
+
+
+        for (int i = 0; i < 20; i++) {
+            if (i%4==0){
+                list.add("http://localhost:11111/aaa/testSleep1");
+                TestSleep testSleep = new TestSleep();
+                testSleep.setIndex(String.valueOf(i));
+                list2.add(JSONObject.toJSONString(testSleep));
+            }else {
+                list.add("http://localhost:11111/aaa/testSleep");
+                SysUser sysUser = new SysUser();
+
+                sysUser.setId(i);
+                list2.add(JSONObject.toJSONString(sysUser));
+            }
+        }
+
+        List<HttpResult> strings = null;
+        try {
+            strings = httpClientUtil.batchPost1(list, list2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("testBatch2结果："+strings.toString());
 
     }
 
