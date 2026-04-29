@@ -1,0 +1,22 @@
+{
+  "documents": [
+    {
+      "id": "doc-product-plan",
+      "title": "产品需求文档",
+      "content": "<h2>云文档协同编辑 Demo</h2><p>打开两个浏览器窗口，用不同用户登录，然后进入同一篇文档即可看到实时同步。</p><p><br></p><p>在空行、换行和正文中移动光标，其他用户会看到彩色光标和用户名标签。</p><ul><li>支持在线用户显示</li><li>支持内容自动保存</li><li>支持多用户进入同一文档共同编辑</li></ul>",
+      "ownerId": "u_alice",
+      "revision": 17,
+      "createdAt": "2026-04-30T09:00:32.069Z",
+      "updatedAt": "2026-04-30T09:26:50.775Z"
+    },
+    {
+      "id": "doc-1e7b6074-f2f7-4c6b-ba8b-5624edd39d6e",
+      "title": "新建测试文档",
+      "content": "<h2>新文档</h2><p>按法律放假嗷嗷啊啊啊啊 是谁啊啊啊啊啊啊啊 是蛋蛋事实上啊啊啊</p><p>事实上事实上是谁</p><p>拒绝&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;啊啊啊啊啊啊</p><p><br></p><p>是</p><p>&nbsp;安抚</p><p><br></p><p><br></p><p>事实上a啊s谁是谁</p>",
+      "ownerId": "u_bob",
+      "revision": 74,
+      "createdAt": "2026-04-30T09:03:55.653Z",
+      "updatedAt": "2026-04-30T09:27:36.284Z"
+    }
+  ]
+}

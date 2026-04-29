@@ -19,7 +19,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("=======执行自定义登录逻辑====");
         //校验用户名，实际环境中需要从数据库查询
-        if (!username.equals("admin")) {
+        if (!username.equals("zhangsan")) {
             throw new UsernameNotFoundException("用户不存在");
         }
         //比较密码，实际需要从数据库取出原密码校验，框架会自动读取登录页面的密码
@@ -27,6 +27,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
         //返回UserDetails，实际开发中可拓展UserDetails
         return new User(username, password,
                 //自定义权限
-                AuthorityUtils.commaSeparatedStringToAuthorityList("admin,normal"));
+//                AuthorityUtils.commaSeparatedStringToAuthorityList("admin,normal,ROLE_abc")
+                AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN,ROLE_USER,ROLE_abc")
+        );
     }
 }

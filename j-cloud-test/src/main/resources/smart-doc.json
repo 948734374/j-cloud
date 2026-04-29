@@ -1,0 +1,11 @@
+{
+  "serverUrl": "http://localhost:8088",
+  "outPath": "src/main/resources/static/doc",
+  "isStrict": false,
+  "allInOne": true,
+  "createDebugPage": false,
+  "packageFilters": "com.macro.mall.tiny.controller.*",
+  "style":"xt256",
+  "projectName": "mall-tiny-smart-doc",
+  "showAuthor":true,
+  "allInOneDocFileName":"index.html" }

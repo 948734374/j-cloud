@@ -13,6 +13,7 @@ public class demo {
         return "恭喜你登录成功";
     }
 
+//    @Secured("ROLE_abc")
     @RequestMapping("/toMain")
     public String main() {
         return "redirect:main.html";
@@ -21,5 +22,10 @@ public class demo {
     @RequestMapping("/toError")
     public String error() {
         return "redirect:error.html";
+    }
+
+    @RequestMapping("/demo")
+    public String demo() {
+        return "demo";
     }
 }

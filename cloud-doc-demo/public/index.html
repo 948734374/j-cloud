@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>云文档协同编辑 Demo</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="文档导航">
+        <div class="brand">
+          <svg class="brand-mark" viewBox="0 0 48 48" role="img" aria-label="云文档">
+            <rect x="8" y="6" width="26" height="36" rx="4"></rect>
+            <path d="M16 16h10M16 24h18M16 32h14"></path>
+            <path d="M31 6v10h9"></path>
+          </svg>
+          <div>
+            <strong>云文档</strong>
+            <span>协同编辑 Demo</span>
+          </div>
+        </div>
+
+        <section id="loginPanel" class="panel">
+          <label for="username">用户</label>
+          <select id="username">
+            <option value="alice">Alice</option>
+            <option value="bob">Bob</option>
+            <option value="charlie">Charlie</option>
+          </select>
+          <button id="loginBtn" type="button">登录</button>
+        </section>
+
+        <section id="workspacePanel" class="workspace-panel hidden">
+          <div class="user-line">
+            <span id="currentUserAvatar" class="avatar"></span>
+            <span id="currentUserName"></span>
+          </div>
+          <div class="new-doc">
+            <input id="newDocTitle" type="text" placeholder="新文档标题" />
+            <button id="createDocBtn" type="button">新建</button>
+          </div>
+          <div id="docList" class="doc-list" aria-label="文档列表"></div>
+        </section>
+      </aside>
+
+      <section class="editor-shell">
+        <header class="topbar">
+          <input id="docTitle" class="title-input" type="text" value="" disabled />
+          <div class="topbar-actions">
+            <div id="presence" class="presence"></div>
+            <span id="connectionState" class="status">未连接</span>
+          </div>
+        </header>
+
+        <section id="emptyState" class="empty-state">
+          <svg viewBox="0 0 96 96" aria-hidden="true">
+            <rect x="22" y="12" width="42" height="64" rx="7"></rect>
+            <path d="M34 30h18M34 42h30M34 54h22"></path>
+            <circle cx="66" cy="64" r="13"></circle>
+            <path d="M61 64h10M66 59v10"></path>
+          </svg>
+          <h1>选择或新建一篇文档</h1>
+          <p>用两个浏览器窗口登录不同用户，即可验证多人实时协同编辑。</p>
+        </section>
+
+        <article id="editorPanel" class="document-surface hidden">
+          <div class="meta-row">
+            <span id="saveState">等待编辑</span>
+            <span id="revisionState"></span>
+          </div>
+          <div id="editor" class="editor" contenteditable="true" spellcheck="false"></div>
+          <div id="remoteCursors" class="remote-cursors" aria-hidden="true"></div>
+        </article>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
