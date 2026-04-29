@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * http拒绝权限配置
+ */
 @Component
 public class MyAccessDeniedHandler implements AccessDeniedHandler {
     @Override

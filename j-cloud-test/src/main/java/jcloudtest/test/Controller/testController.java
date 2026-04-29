@@ -7,6 +7,8 @@ import jcloudtest.test.entity.HttpResult;
 import jcloudtest.test.entity.SysUser;
 import jcloudtest.test.entity.TestSleep;
 import jcloudtest.test.utils.HttpClientUtil;
+import jcloudtest.test.vo.req.ReqTest;
+import jcloudtest.test.vo.resp.RespTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -177,5 +179,14 @@ public class testController {
         System.out.println(Thread.currentThread().getName() + "结束沉睡，时间" + a);
 
         return testSleep;
+    }
+
+    @PostMapping("/testSleep1")
+    @ResponseBody
+    public RespTest testSleep4(@RequestBody ReqTest testSleep) throws InterruptedException {
+        RespTest respTest = new RespTest();
+
+
+        return respTest;
     }
 }
