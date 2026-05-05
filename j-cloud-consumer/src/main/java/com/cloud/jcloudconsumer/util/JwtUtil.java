@@ -4,7 +4,7 @@ package com.cloud.jcloudconsumer.util;
 import com.cloud.jcloudconsumer.common.SystemConstant;
 import com.cloud.jcloudconsumer.entity.CheckResult;
 import io.jsonwebtoken.*;
-import sun.misc.BASE64Decoder;
+import java.util.Base64;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -61,8 +61,7 @@ public class JwtUtil {
     }
 
     private static SecretKey generalKey() throws IOException {
-        BASE64Decoder decoder = new BASE64Decoder();
-        byte[] encodedKey = decoder.decodeBuffer(SystemConstant.JWT_SECERT);
+        byte[] encodedKey = Base64.getDecoder().decode(SystemConstant.JWT_SECERT);
         return new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
     }
 
