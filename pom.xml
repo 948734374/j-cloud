@@ -9,6 +9,13 @@
     <packaging>pom</packaging>
     <description>父工程,统一管理jar包版本</description>
     <name>j-cloud</name>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
     <!-- FIXME change it to the project's website -->
 
     <properties>
